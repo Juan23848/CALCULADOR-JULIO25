@@ -104,7 +104,13 @@ if st.button("Calcular Junio 2025"):
         except:
             return [''] * len(row)
 
-    st.dataframe(df.style.apply(estilo, axis=1).format({"Monto ($)":"{:,.2f}"}))
+   try:
+    df["Monto ($)"] = df["Monto ($)"].apply(lambda x: float(x) if isinstance(x, (int, float)) else x)
+    st.dataframe(df.style.apply(estilo, axis=1).format({"Monto ($)": "{:,.2f}"}))
+except Exception as e:
+    st.error(f"Error al mostrar resultados: {e}")
+    st.dataframe(df)
+
     try:
         st.markdown(f"### 💰 NETO Junio 2025: **${float(res['NETO']):,.2f}**")
     except Exception as e:
