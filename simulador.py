@@ -1,39 +1,35 @@
-from salario import calcular_componentes
-from bonos import calcular_bonos
-from descuentos import descuentos_legales, descuento_gremial
 
-def calcular_simulacion(cargos, cantidades, puntajes_dict, vi, antiguedad, gremios,
-                        foid_unit=45000.0, conectividad_total=142600.0):
-    comp = calcular_componentes(cargos, cantidades, puntajes_dict, vi, antiguedad)
+def calcular_descuentos(res, gremios):
+    # Calcular monto total remunerativo (excluyendo FOID y Conectividad)
+    remunerativos = (
+        res.get("Básico", 0) +
+        res.get("Función Docente", 0) +
+        res.get("Antigüedad", 0) +
+        res.get("Transformación", 0) +
+        res.get("Bonificación Docente", 0) +
+        res.get("Zona", 0)
+    )
 
-    bonos = calcular_bonos(comp["simples"], comp["completo"], comp["total_horas"],
-                           foid_unit=foid_unit, total_conectividad=conectividad_total)
+    # Descuento legal: 17%
+    descuento_legal = remunerativos * 0.17
 
-    legal = descuentos_legales(comp["remunerativo"])
-    grem = descuento_gremial(comp["remunerativo"], bonos["TotalBonos"], gremios)
-    total_desc = legal["total"] + grem
+    # Descuento gremial (2% por gremio, sin repetir si mismo gremio)
+    descuento_gremial = 0
+    if gremios:
+        descuento_gremial = remunerativos * 0.02 * len(set(gremios))
 
-    neto = comp["remunerativo"] - total_desc + bonos["TotalBonos"]
+    # Calcular totales
+    total_descuentos = descuento_legal + descuento_gremial
+    neto = (
+        res.get("Remunerativo", 0) +
+        res.get("FOID", 0) +
+        res.get("Conectividad", 0) -
+        total_descuentos
+    )
 
-    return {
-        "Básico": comp["basico"],
-        "Función Docente": comp["funcion"],
-        "Antigüedad": comp["antiguedad"],
-        "Transformación": comp["transformacion"],
-        "Bonificación Docente": comp["bonif_docente"],
-        "Adicional Jerárquico": comp["adic_jerarquico"],
-        "Subtotal": comp["subtotal"],
-        "Zona": comp["zona"],
-        "Remunerativo": comp["remunerativo"],
-        "FOID": bonos["FOID"],
-        "Conectividad": bonos["Conectividad"],
-        "Bonos (Total)": bonos["TotalBonos"],
-        "Descuentos Legales": legal["total"],
-        "Descuento Gremial": grem,
-        "Total Descuentos": total_desc,
-        "NETO": neto,
-        "Horas Totales": comp["total_horas"],
-        "Unidades Conectividad": bonos["Unidades Conectividad"],
-        "Simples": comp["simples"],
-        "Completo": comp["completo"]
-    }
+    # Guardar resultados en el diccionario
+    res["Descuentos Legales"] = round(descuento_legal, 2)
+    res["Descuento Gremial"] = round(descuento_gremial, 2)
+    res["Total Descuentos"] = round(total_descuentos, 2)
+    res["NETO"] = round(neto, 2)
+    return res
