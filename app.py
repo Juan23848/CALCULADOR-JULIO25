@@ -96,13 +96,13 @@ if st.button("Calcular Junio 2025"):
 
     df = pd.DataFrame({"Concepto": list(res.keys()), "Monto ($)": list(res.values())})
 
-   def estilo(row):
-    try:
-        if row["Concepto"] == "NETO":
-            return ['background-color:#1f77b4;color:white;font-weight:bold'] * len(row)
-        return [''] * len(row)
-    except:
-        return [''] * len(row)
+  def estilo(row):
+        try:
+            if row["Concepto"] == "NETO":
+                return ['background-color:#1f77b4;color:white;font-weight:bold'] * len(row)
+            return [''] * len(row)
+        except:
+            return [''] * len(row)
 
     st.dataframe(df.style.apply(estilo, axis=1).format({"Monto ($)":"{:,.2f}"}))
     st.markdown(f"### 💰 NETO Junio 2025: **${res['NETO']:,.2f}**")
