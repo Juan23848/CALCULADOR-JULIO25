@@ -67,11 +67,8 @@ with st.expander("ℹ️ Fuente detectada"):
 
 # Parámetros
 vi = st.number_input("Valor Índice (VI):", value=float(DEFAULT_VI), step=0.000001, format="%.6f")
-foid_unit = st.number_input("FOID por 19 hs ($):", value=float(DEFAULT_FOID), step=100.0)
-conect_total = st.number_input("Conectividad/Materiales total ($):", value=float(DEFAULT_CONECT), step=100.0)
-
+st.markdown(f"**FOID por 19 hs:** ${DEFAULT_FOID_19:,.2f} &nbsp;&nbsp;|&nbsp;&nbsp; **Conectividad total:** ${DEFAULT_CONECT:,.2f}")
 antiguedad = st.number_input("Antigüedad (años):", min_value=0, max_value=40, value=0)
-
 st.subheader("Selección de cargos/horas")
 cargos, cantidades = [], []
 for i in range(3):
