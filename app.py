@@ -1,4 +1,8 @@
+import streamlit as st
+st.title("Marca de agua: VERSION v9 🔧")
+st.write("Ruta:", __file__)
 # app.py (failsafe)
+
 import os
 import streamlit as st
 
