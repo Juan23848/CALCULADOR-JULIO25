@@ -4,7 +4,7 @@ from descuentos import get_descuentos
 
 st.set_page_config(page_title="Simulador Salarial", layout="wide")
 
-st.title("Simulador Salarial - Versión Ajustada")
+st.title("Simulador Salarial")
 
 # Selector de cargos (demo simplificada)
 cargos = {
