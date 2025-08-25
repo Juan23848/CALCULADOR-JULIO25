@@ -1,4 +1,4 @@
-GREMIOS = {
+    GREMIOS = {
     "AMET": 0.015, "SUTEF": 0.02, "SUETRA": 0.02,
     "ATE": 0.022, "UDAF": 0.013, "UDA": 0.015, "UPCN": 0.022
 }
