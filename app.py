@@ -15,6 +15,7 @@ except Exception as e:
     get_descuentos = None
 
 from simulador import calcular_simulacion
+print("✔️ simulador importado OK")
 st.set_page_config(page_title="Simulador Salarial - Failsafe v3", layout="wide")
 st.title("Simulador Salarial - Failsafe v3")
 
