@@ -14,7 +14,7 @@ except Exception as e:
     IMPORT_ERR = f"(import falló: {e})"
     get_descuentos = None
 
-from simulador import calcular_simulacion  # usamos solo esto
+from simulador import calcular_simulacion
 
 st.set_page_config(page_title="Simulador Salarial - Failsafe v3", layout="wide")
 st.title("Simulador Salarial - Failsafe v3")
