@@ -51,3 +51,6 @@ def calcular_simulacion(
         "descuentos_totales": descuentos_totales,
         "neto": neto,
     }
+        "descuentos_totales": descuentos_totales,
+        "neto": neto,
+    }
